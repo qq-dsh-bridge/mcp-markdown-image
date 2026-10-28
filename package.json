@@ -1,0 +1,34 @@
+{
+  "name": "mcp-markdown-image",
+  "version": "0.1.0",
+  "description": "MCP server that renders Markdown to PNG with satori and resvg, without a browser.",
+  "type": "module",
+  "bin": {
+    "mcp-markdown-image": "src/server.mjs"
+  },
+  "files": [
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "start": "node src/server.mjs",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": [
+    "mcp",
+    "markdown",
+    "image",
+    "satori",
+    "resvg"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@resvg/resvg-js": "^2.6.2",
+    "marked": "^18.1.2",
+    "satori": "^0.63.2"
+  }
+}
