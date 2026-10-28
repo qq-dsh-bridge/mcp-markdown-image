@@ -72,6 +72,12 @@ export const book = {
       'C:\\Windows\\Fonts\\CascadiaMono.ttf',
       'C:\\Windows\\Fonts\\consola.ttf',
     ],
+    sans: [
+      'C:\\Windows\\Fonts\\Deng.ttf',
+    ],
+    sansBold: [
+      'C:\\Windows\\Fonts\\Dengb.ttf',
+    ],
   },
 
   heading(depth) {
@@ -83,6 +89,7 @@ export const book = {
       lineHeight: 1.4,
       marginBottom: depth <= 2 ? 8 : 5,
       color: TEXT,
+      fontFamily: 'main',
     };
   },
 
@@ -92,6 +99,7 @@ export const book = {
       fontSize: 17,
       lineHeight: 1.8,
       marginBottom: 8,
+      fontFamily: 'sans',
     };
   },
 
@@ -120,6 +128,7 @@ export const book = {
       color: TEXT_SOFT,
       fontSize: 16,
       lineHeight: 1.8,
+      fontFamily: 'sans',
     };
   },
 
@@ -147,6 +156,7 @@ export const book = {
       fontSize: 17,
       lineHeight: 1.8,
       color: ACCENT,
+      fontFamily: 'sans',
     };
   },
 
@@ -155,6 +165,7 @@ export const book = {
       display: 'block',
       fontSize: 17,
       lineHeight: 1.8,
+      fontFamily: 'sans',
     };
   },
 
@@ -182,6 +193,7 @@ export const book = {
       fontWeight: header ? 600 : 400,
       backgroundColor: header ? CODE_BG : 'transparent',
       borderBottom: `1px solid ${BORDER_LIGHT}`,
+      fontFamily: 'sans',
     };
   },
 

@@ -47,6 +47,23 @@ const MONO_CANDIDATES = [
   '/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf',
 ].filter(Boolean);
 
+const SANS_CANDIDATES = [
+  process.env.MD_SANS_FONT || '',
+  'C:\\Windows\\Fonts\\Deng.ttf',
+  'C:\\Windows\\Fonts\\msyh.ttc',
+  '/System/Library/Fonts/Supplemental/Arial Unicode.ttf',
+  '/usr/share/fonts/truetype/noto/NotoSansCJK-Regular.ttf',
+  '/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf',
+].filter(Boolean);
+
+const SANS_BOLD_CANDIDATES = [
+  process.env.MD_SANS_FONT_BOLD || '',
+  'C:\\Windows\\Fonts\\Dengb.ttf',
+  'C:\\Windows\\Fonts\\msyhbd.ttc',
+  '/System/Library/Fonts/Supplemental/Arial Bold.ttf',
+  '/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf',
+].filter(Boolean);
+
 function firstExisting(candidates) {
   for (const file of candidates) {
     try {
@@ -86,8 +103,16 @@ function loadFonts(theme) {
     ...(spec.mono ?? []),
     ...MONO_CANDIDATES,
   ].filter(Boolean));
+  const sansPath = firstExisting([
+    ...(spec.sans ?? []),
+    ...SANS_CANDIDATES,
+  ].filter(Boolean));
+  const sansBoldPath = firstExisting([
+    ...(spec.sansBold ?? []),
+    ...SANS_BOLD_CANDIDATES,
+  ].filter(Boolean));
 
-  const key = `${mainPath}|${boldPath}|${monoPath}`;
+  const key = `${mainPath}|${boldPath}|${monoPath}|${sansPath}|${sansBoldPath}`;
   if (fontCache.has(key)) return fontCache.get(key);
 
   const main = fs.readFileSync(mainPath);
@@ -98,13 +123,26 @@ function loadFonts(theme) {
   if (monoPath) {
     fonts.push({ name: 'mono', data: fs.readFileSync(monoPath), weight: 400, style: 'normal' });
   }
+  if (sansPath) {
+    const sans = fs.readFileSync(sansPath);
+    fonts.push({ name: 'sans', data: sans, weight: 400, style: 'normal' });
+    fonts.push({
+      name: 'sans',
+      data: sansBoldPath ? fs.readFileSync(sansBoldPath) : sans,
+      weight: 700,
+      style: 'normal',
+    });
+  }
 
   const loaded = {
     fonts,
     mono: monoPath ? 'mono' : 'main',
+    sans: sansPath ? 'sans' : 'main',
     mainPath,
     boldPath,
     monoPath,
+    sansPath,
+    sansBoldPath,
   };
   fontCache.set(key, loaded);
   return loaded;
